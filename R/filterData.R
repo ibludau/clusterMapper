@@ -8,7 +8,7 @@
 #' @import data.table
 #' @export
 #'
-#' @examplesroxygenize()
+#' @examples
 #' data <- exampleData
 #' filteredData <- filterData(data,
 #'                            min_run_coverage = 0.6)
