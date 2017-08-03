@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "context(\"filterData\")\n\ntest_that(\"valid input parameters\", {\n  data <- exampleData\n  blank <- c()\n  brokenData <- copy(data)\n  brokenData <- data[,Collapsed_Peptide := NULL]\n  cutoff <- 0.5\n  cutoff_1 <- 1\n  cutoff_0 <- 0\n  cutoff_tooBig <- 1.5\n  cutoff_tooSmall <- -1\n  expect_error(filterData(data))\n})\n",
+    "created" : 1501586063953.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "412988521",
+    "id" : "E8C51130",
+    "lastKnownWriteTime" : 1501587919,
+    "last_content_update" : 1501587918454,
+    "path" : "/Volumes/ibludau-1/clusterMapper/clusterMapper/tests/test_filterData.R",
+    "project_path" : "tests/test_filterData.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

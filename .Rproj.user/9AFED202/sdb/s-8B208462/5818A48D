@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "context(\"mapClusters\")\n\ntest_that(\"one cluster\", {\n  # test easy dataset\n  testData <- subset(exampleDataFiltered,Collapsed_Peptide==\"KPSLEFLPQPASSTNLNFNSNK(1P)\")\n  testthat::expect_equal(unique(mapClusters(testData)$new_cluster),1)\n  rm(testData)\n  # test data with one outlier\n  testData <- subset(exampleDataFiltered,Collapsed_Peptide==\"NLLTNTPVDYEYESDAEEEQGDKDIK(1P)\")\n  testMap <- mapClusters(testData)\n  outlier_idx <- which((testMap$transition_group_id==\"9994_NLLTNTPVDY(UniMod:21)EYESDAEEEQGDKDIK_3_run0\") & (testMap$run_id==\"0_1\"))\n  testthat::expect_equal(testMap[outlier_idx]$new_cluster,0)\n  testthat::expect_equal(unique(testMap[-outlier_idx]$new_cluster),1)\n  rm(testData,testMap,outlier_idx)\n  # test data with multiple clusters\n  testData <- complexExample\n  testMap <- mapClusters(testData)\n  testthat::expect_equal(length(which(testMap$new_cluster == 0)),7)\n  testthat::expect_equal(length(which(testMap$new_cluster == 1)),85)\n  testthat::expect_equal(length(which(testMap$new_cluster == 2)),0)\n  testthat::expect_equal(length(which(testMap$new_cluster == 3)),26)\n  rm(testData,testMap)\n  # test data that previously made problems\n  testData <- subset(fullDataFiltered,Collapsed_Peptide == \"NPTKSPPPPPSPSTMDTGTSNSPSK(3P)\")\n  testMap <- mapClusters(testData)\n  testthat::expect_equal(length(which(testMap$new_cluster == 0)),1049)\n  testthat::expect_equal(length(which(testMap$new_cluster == 1)),0)\n  testthat::expect_equal(length(which(testMap$new_cluster == 2)),116)\n  testthat::expect_equal(length(which(testMap$new_cluster == 3)),1480)\n  rm(testData,testMap)\n  # and another problematic one\n  testData <- subset(fullDataFiltered,Collapsed_Peptide == \"NSNNSFLNSVPHSVTR(2P)\")\n  testMap <- mapClusters(testData)\n  testthat::expect_equal(length(which(testMap$new_cluster == 0)),115)\n  testthat::expect_equal(length(which(testMap$new_cluster == 1)),275)\n  rm(testData,testMap)\n})\n",
+    "created" : 1501771925494.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3512202587",
+    "id" : "5818A48D",
+    "lastKnownWriteTime" : 1501773396,
+    "last_content_update" : 1501773396054,
+    "path" : "/Volumes/ibludau-1/clusterMapper/clusterMapper/tests/testthat/test_mapClusters.R",
+    "project_path" : "tests/testthat/test_mapClusters.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

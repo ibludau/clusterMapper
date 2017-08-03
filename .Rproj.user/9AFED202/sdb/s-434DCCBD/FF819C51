@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library('data.table')\ndata <- fread(\"/IMSB/ra/ibludau/phospho_cluster_mapping/input/combined_clusters_head_all_mscore.txt\")\ndataSub <- subset(data,run_id %in% c(\"0_0\",\"0_1\",\"0_2\",\"0_3\",\"0_4\",\"0_5\"))\ndataSub <- subset(dataSub,Collapsed_Peptide %in% unique(dataSub$Collapsed_Peptide)[1:5])\nexampleData <- copy(dataSub)\n\nsetwd(\"/IMSB/ra/ibludau/clusterMapper/clusterMapper\")\nlibrary(devtools)\nload_all()\nuse_data(exampleData,overwrite = TRUE)\n\nload_all()\ndata <- exampleData\nexampleDataFiltered <- filterData(data,\n                                  min_run_coverage = 0.6)\nuse_data(exampleDataFiltered,overwrite = TRUE)\n\n\ndataFiltered <- filterData(data,min_run_coverage = 0.6)\ncomplexExample <- subset(dataFiltered,Collapsed_Peptide==\"ISSASTPQTSQGRFTAPTSPSTSSPK(3P)\")\ncomplexExample <- subset(complexExample,run_id %in% c(\"0_0\",\"0_1\",\"0_2\",\"0_3\",\"0_4\",\"0_5\"))\nuse_data(complexExample,overwrite = TRUE)\n\n\n## subset data for code testing\n\ndataMapped <- mapClusters(dataSub, sort_RT=FALSE)\n",
+    "created" : 1501586371816.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3936192967",
+    "id" : "FF819C51",
+    "lastKnownWriteTime" : 1501595188,
+    "last_content_update" : 1501595188960,
+    "path" : "/Volumes/ibludau-1/clusterMapper/clusterMapper/generateExampleData.R",
+    "project_path" : "generateExampleData.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

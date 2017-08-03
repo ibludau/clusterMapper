@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "#' Coverage filter\n#'\n#' @param table data.table with original cluster information\n#' @param min_run_coverage Numeric between 0 and 1. Minimum coverage of a\n#' transition group id across all runs. Default is 0.6.\n#' @return data.table Same as input table but including extra columns about\n#' run coverage information and filtered by \\code{min_run_coverage}.\n#' @export\n#'\n#' @examples\n#' data <- exampleData\n#' filteredData <- filterData(data,\n#'                            min_run_coverage = 0.6)\nfilterData <- function(table,\n                       min_run_coverage = 0.6){\n  if (! all(class(table) == c(\"data.table\",\"data.frame\"))) {\n    stop(\"The provided input table is not a data.table.\")\n  }\n  if (nrow(table) == 0) {\n    stop(\"The provided input table is empty.\")\n  }\n  if (! c(\"transition_group_id\",\"run_id\",\"RT\",\"Collapsed_Peptide\",\"Cluster\") %in% names(table)) {\n    stop(\"The provided input table does not contain all required columns.\")\n  }\n  if ((min_run_coverage > 1) | (min_run_coverage < 0)) {\n    stop(\"The provided min_run_coverage value is not valid. Please choose a value between 0 and 1.\")\n  }\n  features <- copy(table)\n  features <- subset(features, select = c(\"transition_group_id\",\"run_id\",\"RT\",\"Collapsed_Peptide\",\"Cluster\"))\n  features[ , `:=`( run_freq = .N ) , by = transition_group_id ]\n  runCount <- length(unique(features$run_id))\n  minRunCount <- ceiling(runCount*min_run_coverage)\n  featuresFiltered <- subset(features, run_freq >= minRunCount)\n  featuresRemoved <- subset(features, run_freq < minRunCount)\n  removedIds <- length(unique(featuresRemoved$transition_group_id))\n  totalIds <- length(unique(features$transition_group_id))\n  percentageRemoved <- round(100/totalIds*removedIds,digits = 2)\n  message(paste0(\"Removed \",removedIds,\" out of \",totalIds,\n                 \" transition_group_ids (\",percentageRemoved,\n                 \"%) based on a min_coverage_filter of \",\n                 min_run_coverage,\".\"))\n  return(featuresFiltered)\n}\n\n",
+    "created" : 1501585619469.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3748235242",
+    "id" : "158E602A",
+    "lastKnownWriteTime" : 1501589153,
+    "last_content_update" : 1501589153133,
+    "path" : "/Volumes/ibludau-1/clusterMapper/clusterMapper/R/filterData.R",
+    "project_path" : "R/filterData.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
