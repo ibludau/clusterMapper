@@ -3,7 +3,8 @@ mapClusters <- function(table, sort_RT=FALSE){
   ## count number of clusters per run and collapsed peptide
   features[, cluster_count_per_run := uniqueN(Cluster), by = c("run_id","Collapsed_Peptide")]
   ## count total number of clusters across all runs
-  features[, cluster_count_total := max(cluster_count_per_run), by = c("Collapsed_Peptide")]
+  #features[, cluster_count_total := max(cluster_count_per_run), by = c("Collapsed_Peptide")] ##This does account for the fact that clusters might have been filtered out. Might be better but inconsistent with previous results.
+  features[, cluster_count_total := uniqueN(Cluster), by = c("Collapsed_Peptide")]
   ## if only one cluster across all runs, new cluster is 1
   features[ , new_cluster := ifelse(cluster_count_total == 1, 1, 0)]
   featuresDone <- subset(features, new_cluster != 0)

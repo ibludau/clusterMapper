@@ -11,8 +11,12 @@ fullData <- copy(data)
 fullDataFiltered <- filterData(fullData)
 #use_data(fullData,overwrite = TRUE)
 use_data(fullDataFiltered,overwrite = TRUE)
-
 use_data(exampleData,overwrite = TRUE)
+
+load_all()
+fullDataMapped <- mapClusters(fullDataFiltered)
+use_data(fullDataMapped,overwrite = TRUE)
+
 
 load_all()
 data <- exampleData
