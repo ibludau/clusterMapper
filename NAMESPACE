@@ -2,5 +2,6 @@
 
 export(filterClusters)
 export(filterData)
+export(generateMatrix)
 export(mapClusters)
 import(data.table)
