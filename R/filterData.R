@@ -1,5 +1,6 @@
 #' Coverage filter
 #'
+#' @description Filter input data by removing transition groups with a detection frequency < min_run_coverage.
 #' @param table data.table with original cluster information
 #' @param min_run_coverage Numeric between 0 and 1. Minimum coverage of a
 #' transition group id across all runs. Default is 0.6.

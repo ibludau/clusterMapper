@@ -1,5 +1,11 @@
 #' Mapped cluster filter
 #'
+#' @description Filter mapped clusters by following criteria:
+#' \itemize{
+#'  \item Cluster must be main cluster of the transition group.
+#'  \item Main cluster frequency must be >= min_main_cluster_freq.
+#'  \item Main cluster should not be zero (non-defined).
+#' }
 #' @param table data.table with original cluster information
 #' @param min_main_cluster_freq Numeric between 0 and 1. Minimum frequency of a
 #' transition group id matched to the same cluster. Default is 0.6.
@@ -7,6 +13,11 @@
 #' run coverage information and filtered by \code{min_main_cluster_freq}.
 #' @import data.table
 #' @export
+#'
+#' @examples
+#' data <- fullDataMapped
+#' filteredData <- filterData(data,
+#'                            min_main_cluster_freq = 0.6)
 filterClusters <- function(table, min_main_cluster_freq = 0.6){
   if (! all(class(table) == c("data.table","data.frame"))) {
     stop("The provided input table is not a data.table. Please provide an output table from mapClusters.")

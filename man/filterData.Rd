@@ -17,5 +17,10 @@ data.table Same as input table but including extra columns about
 run coverage information and filtered by \code{min_run_coverage}.
 }
 \description{
-Coverage filter
+Filter input data by removing transition groups with a detection frequency < min_run_coverage.
+}
+\examples{
+data <- exampleData
+filteredData <- filterData(data,
+                           min_run_coverage = 0.6)
 }

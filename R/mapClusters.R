@@ -1,3 +1,18 @@
+#' Cluster mapping function
+#'
+#' @description Map clusters by common transition groups.
+#' @param table data.table with original cluster information
+#' @param sort_RT Logical whether to sort the the original Clusters of test runs by retention time.
+#' Default is \code{FALSE}.
+#' @return data.table Same as input table but including extra columns about
+#' mapping information. The "new_cluster" column contains the mapped cluster information.
+#' @import data.table
+#' @export
+#'
+#' @examples
+#' data <- exampleDataFiltered
+#' dataMapped <- mapClusters(data)
+#'
 mapClusters <- function(table, sort_RT=FALSE){
   features <- copy(table)
   ## count number of clusters per run and collapsed peptide
@@ -67,6 +82,7 @@ mapClusters <- function(table, sort_RT=FALSE){
   return(out)
 }
 
+#' Helper function for \code{mapClusters}.
 mapToReference <- function(test, reference, sort_RT){
   testSub <- copy(test)
   referenceSub <- copy(reference)
