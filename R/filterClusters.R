@@ -8,6 +8,19 @@
 #' @import data.table
 #' @export
 filterClusters <- function(table, min_main_cluster_freq = 0.6){
+  if (! all(class(table) == c("data.table","data.frame"))) {
+    stop("The provided input table is not a data.table. Please provide an output table from mapClusters.")
+  }
+  if (nrow(table) == 0) {
+    stop("The provided input table is empty.")
+  }
+  if (! all(c("transition_group_id","run_id","RT","Collapsed_Peptide","Cluster","new_cluster") %in% names(table))) {
+    stop("The provided input table does not contain all required columns. Please provide an output table from mapClusters.")
+  }
+  if ((min_main_cluster_freq > 1) | (min_main_cluster_freq < 0)) {
+    stop("The provided min_main_cluster_freq value is not valid. Please choose a value between 0 and 1.")
+  }
+
   features <- copy(table)
   # number of runs per transition group
   features[, run_count_per_tg := uniqueN(run_id), by = c("transition_group_id")]
