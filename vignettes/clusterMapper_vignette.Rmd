@@ -1,0 +1,62 @@
+---
+title: "Introduction to clusterMapper"
+author: "Isabell Bludau"
+date: '`r Sys.Date()`'
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    depth: 3
+    number_sections: yes
+    theme: united
+    toc: yes
+vignette: |
+  %\VignetteIndexEntry{Vignette Title} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}
+---
+
+# Overview and installation
+This package mapps clusters of delocalized phospho-peptides. Input is a clustering table from Umut Toprak. The data will be filtered for consistent transition group detection across runs. Clusters will be mapped according to common tranition group ids and outliers transition group ids that have a cluster assigned that is not the main cluster of the transition group id across all runs will be removed.
+The package can be installed from github using following commands:
+```{r}
+require(devtools)
+install_github("ibludau/clusterMapper")
+library('clusterMapper')
+```
+
+# Data processing 
+## Data import
+The input data from Umut's tool should have the following format:
+```{r}
+head(exampleData, n=2)
+```
+## Data filtering
+The input data can be filtered according to consistent transition group id detection across runs. The minimum run coverage can be adjusted, the default is a detection coverage of 0.6.
+```{r}
+dataFiltered <- filterData(exampleData,
+                           min_run_coverage = 0.6)
+head(dataFiltered, n=2)
+```
+## Cluster mapping
+The next step is the actual cluster mapping.
+```{r}
+dataMapped <- mapClusters(dataFiltered)
+head(dataMapped, n=2)
+```
+## Cluster filtering
+The mapped clusters are filtered based on the cluster frequency of a transition group id (>= 0.6 main cluster frequency). Furthermore, transition groups with no cluster assignment (new_luster == 0) are removed.
+```{r}
+dataMappedFiltered <- filterClusters(dataMapped,
+                                     min_main_cluster_freq = 0.6)
+head(dataMappedFiltered, n=2)
+```
+## Final data generation
+Finally the mapped cluster information is merged to the original data for further processing. 
+```{r}
+dataFinal <- generateMatrix(rawInput = exampleData, processedData = dataMappedFiltered)
+head(dataFinal, n=2)
+```
+
+# Session information
+```{r, val=TRUE, echo=FALSE}
+session_info()
+```
